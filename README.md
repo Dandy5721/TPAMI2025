@@ -82,7 +82,7 @@ This will:
 To make predictions with a trained model, run:
 
 ```bash
-python inference/predict.py --config configs/mlp_exp.yaml --checkpoint checkpoints/mlp_exp/fold_0/best.pt --device cuda
+python inference/predict.py --config configs/mfg4ad_exp.yaml --checkpoint checkpoints/mlp_exp/fold_0/best.pt --device cuda
 ```
 
 For WGAN, you can generate samples:
