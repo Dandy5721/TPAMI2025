@@ -1,4 +1,4 @@
-# MFG4AD: Uncover Governing Law of Pathology Propagation Mechanism Through A Mean-Field Game
+# MFG4AD
 
 A modular and extendable deep learning training framework that supports:
 - Multiple model types (MLP, GCN, GAN, WGAN and so on ...check the comparative methods in Table 1)
@@ -24,7 +24,7 @@ project/
 │   ├── mlp_exp.yaml        # MLP experiment configuration
 │   ├── wgan_exp.yaml       # WGAN experiment configuration
 │   ├── ***_exp.yaml       # *** experiment configuration     
-│   └── mfg4ad_surface.yaml       # MFG4AD experiment configuration
+│   └── mfg4ad_exp.yaml       # MFG4AD experiment configuration
 
 ├── data/                    # Data loading modules
 │   ├── dataloader_factory.py    # Factory for creating dataloaders
