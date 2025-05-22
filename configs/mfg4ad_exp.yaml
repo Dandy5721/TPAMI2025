@@ -1,0 +1,100 @@
+exp_name: mfg4ad_tau
+
+
+dataset:
+  name: surface
+  params:
+    data_dir: data
+    preload: true
+
+
+
+model:
+  type: mfg4ad
+
+# Generator configuration
+generator:
+  type: mfg4ad_generator
+  latent_dim: 1024
+  hidden_gcn: [8]
+  hidden_flow: [16, 8]
+  mlp_hidden: [1024, 512, 256, 128]
+  ablation: all
+  output_activation: tanh
+  output_dim: 1
+  input_dim: 1
+  noise_level: 0.0
+  seed: 42
+  num_nodes: 163842
+
+
+# Critic configuration
+critic:
+  type: mfg4ad_critic
+  input_dim: 1
+  hidden_dims: [32, 64, 128]
+  output_dim: 1
+  activation: leaky_relu
+  output_activation: null
+  use_batch_norm: false
+
+# Loss configuration
+generator_loss:
+  type: wgan_generator
+
+critic_loss:
+  type: wgan_discriminator
+
+# Optimizer configuration for generator
+generator_optim:
+  optimizer:
+    type: adam
+    lr: 0.0001
+    beta1: 0.5
+    beta2: 0.9
+  scheduler:
+    type: none
+
+# Optimizer configuration for critic
+critic_optim:
+  optimizer:
+    type: adam
+    lr: 0.00001
+    beta1: 0.5
+    beta2: 0.9
+  scheduler:
+    type: none
+
+train:
+  num_folds: 5
+  batch_size: 1
+  num_workers: 0
+
+# Trainer configuration
+trainer:
+  type: mfg4ad
+  epochs: 1000
+  log_interval: 10
+
+hooks:
+  early_stopping:
+    enabled: true
+    monitor: train_mae
+    min_delta: 0.0001
+    patience: 10
+    mode: min
+    verbose: true
+  
+  model_checkpoint:
+    enabled: true
+    monitor: train_mae
+    mode: min
+    save_dir: checkpoints
+    filename: best.pt
+    verbose: true
+  
+  logger:
+    enabled: true
+    log_dir: logs
+    log_batch: false
+    log_epoch: true 

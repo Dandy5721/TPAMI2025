@@ -1,0 +1,103 @@
+# WGAN Experiment Configuration
+exp_name: wgan_exp
+
+# Generator configuration
+generator:
+  type: wgan_generator
+  latent_dim: 1024
+  hidden_dims: [1024, 512]
+  output_dim: 256
+  activation: relu
+  output_activation: tanh
+  use_batch_norm: true
+
+# Critic configuration
+critic:
+  type: wgan_discriminator
+  input_dim: 256
+  hidden_dims: [1024, 512]
+  output_dim: 1
+  activation: leaky_relu
+  output_activation: null
+  use_batch_norm: false
+
+# Loss configuration
+generator_loss:
+  type: wgan_generator
+
+critic_loss:
+  type: wgan_discriminator
+  gradient_penalty_weight: 10.0
+
+# Optimizer configuration for generator
+generator_optim:
+  optimizer:
+    type: adam
+    lr: 0.0001
+    beta1: 0.5
+    beta2: 0.9
+  scheduler:
+    type: none
+
+# Optimizer configuration for critic
+critic_optim:
+  optimizer:
+    type: adam
+    lr: 0.0001
+    beta1: 0.5
+    beta2: 0.9
+  scheduler:
+    type: none
+
+# WGAN specific settings
+wgan:
+  latent_dim: 100
+  critic_iterations: 5
+  use_gradient_penalty: true
+
+# Dataset configuration
+dataset:
+  name: synthetic
+  params:
+    num_samples: 2000
+    input_dim: 10
+    output_dim: 1
+    task_type: gan
+    noise_level: 0.0
+    seed: 42
+
+# Training configuration
+train:
+  num_folds: 3
+  batch_size: 64
+  num_workers: 4
+
+# Trainer configuration
+trainer:
+  type: wgan
+  epochs: 100
+  log_interval: 10
+
+# Hooks configuration
+hooks:
+  early_stopping:
+    enabled: true
+    monitor: wasserstein_distance
+    min_delta: 0.01
+    patience: 20
+    mode: max
+    verbose: true
+  
+  model_checkpoint:
+    enabled: true
+    monitor: wasserstein_distance
+    mode: max
+    save_dir: checkpoints
+    filename: best.pt
+    verbose: true
+  
+  logger:
+    enabled: true
+    log_dir: logs
+    log_batch: false
+    log_epoch: true 

@@ -1,0 +1,87 @@
+exp_name: raw_gan_tau
+
+dataset:
+  name: surface
+  params:
+    data_dir: data
+    preload: true
+
+model:
+  type: raw_gan
+
+# Generator configuration
+generator:
+  type: raw_generator
+  input_dim: 163842
+  hidden_dims: [1024, 512, 256]  # Three hidden layers with expanding then contracting dimensions
+  output_dim: 163842
+  dropout_rate: 0.2
+  latent_dim: 1024  # Added latent dimension for noise input
+
+# Discriminator configuration
+critic:
+  type: raw_discriminator
+  input_dim: 163842
+  hidden_dims: [1024, 512, 256] # Symmetric structure with generator
+  dropout_rate: 0.2
+
+# Loss configuration
+generator_loss:
+  type: mse  # Using binary cross entropy loss
+
+critic_loss:
+  type: mse  # Using binary cross entropy loss
+
+# Optimizer configuration for generator
+generator_optim:
+  optimizer:
+    type: adam
+    lr: 0.0002  # Common learning rate for GAN training
+    beta1: 0.5
+    beta2: 0.999
+  scheduler:
+    type: none
+
+# Optimizer configuration for discriminator
+critic_optim:
+  optimizer:
+    type: adam
+    lr: 0.0002
+    beta1: 0.5
+    beta2: 0.999
+  scheduler:
+    type: none
+
+train:
+  num_folds: 5
+  batch_size: 32  # Larger batch size helps with GAN training stability
+  num_workers: 0
+
+# Trainer configuration
+trainer:
+  type: raw_gan
+  epochs: 1000
+  log_interval: 10
+
+hooks:
+  early_stopping:
+    enabled: true
+    monitor: train_mae
+    min_delta: 0.0001
+    patience: 10
+    mode: min
+    verbose: true
+  
+  model_checkpoint:
+    enabled: true
+    monitor: train_mae
+    mode: min
+    save_dir: checkpoints
+    filename: best.pt
+    verbose: true
+  
+  logger:
+    enabled: true
+    log_dir: logs
+    log_batch: false
+    log_epoch: true

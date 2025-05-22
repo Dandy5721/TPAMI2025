@@ -1,0 +1,74 @@
+exp_name: gcnii_tau_no_concat
+
+dataset:
+  name: surface
+  params:
+    data_dir: data
+    preload: true
+
+train:
+  num_folds: 5
+  batch_size: 1
+  num_workers: 0
+  num_epochs: 1000
+  learning_rate: 0.001
+
+model:
+  type: gcnii
+  input_dim: 1
+  hidden_dim: 16
+  output_dim: 1
+  num_layers: 3
+  alpha: 0.1
+  lambda_val: 0.5
+  dropout: 0.5
+
+loss:
+  type: mse
+  reduction: mean
+
+optim:
+  optimizer:
+    type: adam
+    lr: 0.001
+    beta1: 0.9
+    beta2: 0.999
+    weight_decay: 0.0001
+  scheduler:
+    type: reduce_on_plateau
+    mode: min
+    factor: 0.1
+    patience: 5
+    min_lr: 0.00001
+
+trainer:
+  type: gcn
+  num_epochs: 100
+  learning_rate: 0.001
+  batch_size: 1
+  num_workers: 1
+
+
+# Hooks configuration
+hooks:
+  early_stopping:
+    enabled: true
+    monitor: train_mae
+    min_delta: 0.0001
+    patience: 10
+    mode: min
+    verbose: true
+  
+  model_checkpoint:
+    enabled: true
+    monitor: train_mae
+    mode: min
+    save_dir: checkpoints
+    filename: best.pt
+    verbose: true
+  
+  logger:
+    enabled: true
+    log_dir: logs
+    log_batch: false
+    log_epoch: true 
