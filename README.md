@@ -97,7 +97,7 @@ The system is designed to be fully configurable through YAML files. Here's an ex
 
 ```yaml
 # MLP Experiment Configuration
-exp_name: mlp_exp1
+exp_name: mlp_exp
 
 # Model configuration
 model:
