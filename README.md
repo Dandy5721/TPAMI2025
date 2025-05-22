@@ -1,4 +1,4 @@
-# MFG4AD
+# TPAMI-2025-05-1403 Reviewing
 
 A modular and extendable deep learning training framework that supports:
 - Multiple model types (MLP, GCN, GAN, WGAN and so on ...check the comparative methods in Table 1)
