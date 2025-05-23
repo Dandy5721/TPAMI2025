@@ -1,4 +1,4 @@
-exp_name: mlp_tau_no_concat
+exp_name: mlp_exp
 
 dataset:
   name: surface
