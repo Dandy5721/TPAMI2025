@@ -1,4 +1,4 @@
-exp_name: raw_gan_tau
+exp_name: gan_exp
 
 dataset:
   name: surface
