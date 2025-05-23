@@ -1,4 +1,4 @@
-exp_name: deep_symbolic_tau_no_concat
+exp_name: deep_symbolic_exp
 
 dataset:
   name: surface
