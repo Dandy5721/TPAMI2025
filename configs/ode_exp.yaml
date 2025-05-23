@@ -1,4 +1,4 @@
-exp_name: ode_tau_no_concat
+exp_name: ode_exp
 
 dataset:
   name: tau
