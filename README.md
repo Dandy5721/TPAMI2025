@@ -68,7 +68,7 @@ project/
 To train a model, create a configuration file in the `configs` directory and run:
 
 ```bash
-python main.py --config configs/mlp_exp1.yaml --device cuda
+python main.py --config configs/mfg4ad_exp.yaml --device cuda
 ```
 
 This will:
@@ -82,7 +82,7 @@ This will:
 To make predictions with a trained model, run:
 
 ```bash
-python inference/predict.py --config configs/mfg4ad_exp.yaml --checkpoint checkpoints/mlp_exp/fold_0/best.pt --device cuda
+python inference/predict.py --config configs/mfg4ad_exp.yaml --checkpoint checkpoints/mfg4ad_exp/fold_0/best.pt --device cuda
 ```
 
 For WGAN, you can generate samples:
